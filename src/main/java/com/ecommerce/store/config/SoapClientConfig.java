@@ -4,7 +4,7 @@ import com.ecommerce.store.middleware.SoapAuthClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
 
 @Configuration
 public class SoapClientConfig {
@@ -13,18 +13,9 @@ public class SoapClientConfig {
     private String soapAuthUrl;
 
     @Bean
-    public Jaxb2Marshaller marshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("com.ecommerce.store.middleware");
-        return marshaller;
-    }
-
-    @Bean
-    public SoapAuthClient soapAuthClient(Jaxb2Marshaller marshaller) {
+    public SoapAuthClient soapAuthClient() {
         SoapAuthClient client = new SoapAuthClient();
         client.setDefaultUri(soapAuthUrl);
-        client.setMarshaller(marshaller);
-        client.setUnmarshaller(marshaller);
         return client;
     }
 }
