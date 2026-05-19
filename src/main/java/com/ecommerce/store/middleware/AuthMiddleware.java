@@ -78,8 +78,11 @@ public class AuthMiddleware implements Filter {
     }
 
     private boolean isPublicEndpoint(String path, String method) {
-        // GET /products is public (browsing) - others require auth
-        return "GET".equals(method) && path.startsWith("/products");
+        // GET /products нийтийн — token шаардахгүй
+        if ("GET".equals(method) && path.startsWith("/products")) return true;
+        // OPTIONS preflight
+        if ("OPTIONS".equals(method)) return true;
+        return false;
     }
 
     /**
