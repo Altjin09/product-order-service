@@ -29,8 +29,6 @@ public class SoapAuthClient extends WebServiceGatewaySupport {
             getWebServiceTemplate().sendSourceAndReceiveToResult(soapAuthUrl, source, result);
 
             String response = result.toString();
-            log.debug("SOAP response: {}", response);
-
             boolean valid = response.contains("<valid>true</valid>")
                     || response.contains("<ns2:valid>true</ns2:valid>");
             String username = extractTag(response, "username");
@@ -38,7 +36,6 @@ public class SoapAuthClient extends WebServiceGatewaySupport {
             String userId = extractTag(response, "userId");
 
             return new TokenValidationResult(valid, username, role, userId);
-
         } catch (Exception e) {
             log.error("SOAP ValidateToken failed: {}", e.getMessage());
             return new TokenValidationResult(false, null, null, null);
