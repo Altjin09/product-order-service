@@ -33,6 +33,7 @@ public class Product {
     private String category;
 
     // Image URL stored from File Manager Service (Lab07)
+    @Column(name = "image_url", length = 1000)
     private String imageUrl;
 
     // Seller's userId from SOAP Auth
